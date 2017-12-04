@@ -13,9 +13,11 @@
     "express": "^4.16.2",
     "forever": "^0.15.3",
     "jquery": "^3.2.1",
-    "mongoose": "^4.13.5",
+    "mongoose": "^4.13.6",
     "morgan": "~1.9.0",
     "mysql": "^2.15.0",
-    "serve-favicon": "~2.4.5"
+    "node-gyp": "^3.6.2",
+    "serve-favicon": "~2.4.5",
+    "spellchecker": "^3.4.4"
   }
 }
