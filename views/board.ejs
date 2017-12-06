@@ -2,21 +2,31 @@
 <html>
 <head>
     <title><%= title %></title>
-    <link rel='stylesheet' href='/stylesheets/style.css'/>
-    <!-- include libraries(jQuery, bootstrap) -->
-    <link href="http://netdna.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.css" rel="stylesheet">
-    <script src="http://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.js"></script>
-    <script src="http://netdna.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.js"></script>
-    <!-- include summernote css/js-->
-    <link href="http://cdnjs.cloudflare.com/ajax/libs/summernote/0.8.8/summernote.css" rel="stylesheet">
-    <script src="http://cdnjs.cloudflare.com/ajax/libs/summernote/0.8.8/summernote.js"></script>
+    <link rel='stylesheet' href='/stylesheets/style.css' />
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 </head>
 <body>
-<div id="summernote">Hello Summernote</div>
-<script>
-    $(document).ready(function() {
-        $('#summernote').summernote();
-    });
-</script>
+    <%if(contents.length>0){%>
+    <%var i = 0;%>
+    <%contents.forEach(function(item){%>
+    <%i++;%>
+    <tr>
+        <td class="number"><%=i%></td>
+        <td class="title"><a href="/boards/view?id=<%=item._id%>"><%=item.title%></a></td>
+        <td class="writer"><%=item.writer%></td>
+        <td class="date"><%=dateFormatChange(item.date)%></td>
+        <td class="cnt"><%=item.count%></td>
+    </tr>
+    <%})%>
+    <%} else {%>
+    <tr>
+        <td colspan="5">게시물이 없습니다.</td>
+    </tr>
+
+    <%}%>
+    <br>
+    <button type="button" class="btn btn-primary" onclick="location.href='./write'">Write</button>
 </body>
 </html>

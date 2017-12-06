@@ -7,7 +7,8 @@
     <link href="http://netdna.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.css" rel="stylesheet">
     <script src="http://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.js"></script>
     <script src="http://netdna.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.js"></script>
-    <script src="/javascripts/spellcheck.js"/>
+    <script src="/javascripts/spellcheck.js"></script>
+
     <script>
         function htmledit(excute){
             writeframe.document.execCommand(excute);
@@ -15,17 +16,13 @@
         }
     </script>
     <script>
-        function textalign(option){
-            $('#writeframe').contents().find('body').attr("style", "text-align: "+option+";");
-        }
-    </script>
-    <script>
-        var spellChecker = require('spellchecker');
         var result;
         function checkspell(){
             if(confirm("Spell Check?")){
-                result = spellChecker.isMisspelled($('#writeframe').contents().find('html').text());
-                console.log(result);
+                var word = $('#writeframe').contents().find('html').text();
+                console.log("before word: " + word);
+                result = speller.correct(word);
+                console.log("corrected word: "+result);
                 return true;
             } else return false;
         }
@@ -40,22 +37,53 @@
             } else return false;
         }
     </script>
+    <script>
+        function textAlign(frame, option){
+            $(frame).contents().find('body').attr("style", "text-align: "+option+";");
+        }
+    </script>
 </head>
 <body>
-<p>
-    text align:
-<a href="javascript:textalign('left');">left</a>
-<a href="javascript:textalign('center');">center</a>
-<a href="javascript:textalign('right');">right</a>
-</p>
+<div class="write_form" style="text-align:center">
+<form id="writeAction" action="/write.do" method="post">
+    <input type="text" class="inputSubject" id="addContentSubject" name="addContentSubject" placeholder="Subject">
+    <br>
+    <input type="text" class="inputAuthor" id="addContentAuthor" name="addContentAuthor" placeholder="Author">
+    <br>
+    <a href="javascript:textAlign('#writeframe', 'left');">left</a>
+    <a href="javascript:textAlign('#writeframe', 'center');">center</a>
+    <a href="javascript:textAlign('#writeframe', 'right');">right</a>
+    <br>
+    <iframe name="writeframe" id="writeframe"></iframe>
+    <script>
+        writeframe.document.designMode="on";
+    </script>
+    <br>
+    <button id="spellcheck" class="btn btn-primary" onclick="checkspell()" type="button">Spell Check</button>
+    <button id="save" class="btn btn-primary" onclick="submitContents('add')" type="button">Submit</button>
+</form>
 <br>
-<iframe name="writeframe" id="writeframe"></iframe>
-<script>
-    writeframe.document.designMode="on";
-</script>
-<br>
-<button id="spellcheck" class="btn btn-primary" onclick="checkspell()" type="button">Spell Check</button>
-<button id="save" class="btn btn-primary" onclick="save()" type="button">Save</button>
-<br>
+</div>
 </body>
+
+<script>
+    function submitContents(option){
+        var title = $('#addContentSubject').val();
+        var content = writeframe.document.body.innerText; //완전잘되는거
+        //var content = $('#writeframe').contents().find('html').text();
+       // var content = frames['writeframe'].document.getElementById("body").innerHTML;
+        var author = $('#addContentAuthor').val();
+
+        if(option=='add'){
+            if(title==''||content==''||author==''){
+                alert("Please fill the all blanks!");
+                return;
+            }else{
+                console.log(content);
+                //alert(content);
+                $('#writeAction').submit();
+            }
+        }
+    }
+</script>
 </html>
