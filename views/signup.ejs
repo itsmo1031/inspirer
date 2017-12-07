@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title><%= title %></title>
+    <meta charset='utf-8'>
+    <link href=../stylesheets/style.css" rel="stylesheet">
+
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+    <script>
+        $(function(){
+
+            $("#btnJoin").click(
+                function(){
+
+                    if($("#Userid").val() == "")
+                    {
+                        alert("need to ID");
+                        $("#Userid").focus();
+                        return ;
+                    }
+                    if($("#password").val() == "")
+                    {
+                        alert("need to Password");
+                        $("#password").focus();
+                        return ;
+                    }
+                    if($("#name").val() == "")
+                    {
+                        alert("이름을 꼭 입력 하세요");
+                        $("#name").focus();
+                        return ;
+                    }
+                    if($("#email").val() == "")
+                    {
+                        alert("이메일을 꼭 입력 하세요");
+                        $("#email").focus();
+                        return ;
+                    }
+                    if($("#tel2").val() == "")
+                    {
+                        alert("전화번호 두번째 자리를 확인해 주세요");
+                        $("#tel2").focus();
+                        return ;
+                    }
+                    if($("#tel3").val() == "")
+                    {
+                        alert("전화번호 세번째 자리를 확인해 주세요");
+                        $("#tel3").focus();
+                        return ;
+                    }
+
+                    var tel= $("#tel1").val() +'-'+ $("#tel2").val() +'-'+ $("#tel3").val() ;
+                    $("#tel").val(tel);
+
+
+                    $("#signup").submit();
+
+                }
+            );
+
+        });
+    </script>
+</head>
+<body>
+<h1><%= title %></h1>
+<form id="signupAction" action="/signup" method="post">
+    <table width="400" border="1">
+        <tr>
+            <th>ID</th>
+            <td><input type="text" name="Userid" id="Userid" size="12" minlength="6" maxLength="12"></td>
+        </tr>
+        <tr>
+            <th>Password</th>
+            <td><input type="password" name="password" id="password" size="12" minlength="6" maxLength="12"></td>
+        </tr>
+        <tr>
+            <th>Name</th>
+            <td><input type="text" name="name" id="name" size="10" maxLength="10"></td>
+        </tr>
+        <tr>
+            <th>E-mail</th>
+            <td><input type="email" name="email" id="email" size="30" maxLength="50"></td>
+        </tr>
+        <tr>
+            <th>Number</th>
+            <td>
+                <input type="hidden" name="tel" id="tel">
+                <select name="tel1" id="tel1">
+                    <option value="010">010</option>
+                    <option value="011">011</option>
+                </select>
+                -
+                <input type="text" name="tel2" id="tel2" size="4" maxLength="4">
+                -
+                <input type="text" name="tel3" id="tel3" size="4" maxLength="4">
+            </td>
+        </tr>
+        <tr>
+            <th>성별</th>
+            <td>
+                <input type="radio" name="gender" value="여" checked="checked">여
+                <input type="radio" name="gender" value="남">남
+            </td>
+        </tr>
+        <tr>
+            <td colspan="2">
+                <input type="button" id="btnJoin" name="join"  onclick="submitContents('add');" value="SUBMIT">
+                <input type="reset" name="cancel"value="CANCEL">
+            </td>
+        </tr>
+    </table>
+</form>
+<script>
+function submitContents(option) {
+/*
+var Userid = $('#Userid').val();
+var password = $('#password').val();
+var name = $('#name').val();
+var email = $('#email').val();
+*/
+
+
+$('#signupAction').submit();
+
+}
+</script>
+</body>
+</html>

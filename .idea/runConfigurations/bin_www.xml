@@ -1,5 +1,5 @@
 <component name="ProjectRunConfigurationManager">
-  <configuration default="false" name="bin\www" type="NodeJSConfigurationType" factoryName="Node.js" node-parameters="C:\Users\JSH\AppData\Roaming\npm\node_modules\nodemon\bin\nodemon" path-to-js-file="bin/www" working-dir="$PROJECT_DIR$">
+  <configuration default="false" name="bin\www" type="NodeJSConfigurationType" factoryName="Node.js" node-parameters="C:\Users\tnrud\AppData\Roaming\npm\node_modules\nodemon\bin\nodemon" path-to-js-file="bin/www" working-dir="$PROJECT_DIR$">
     <envs>
       <env name="DEBUG" value="project1130:*" />
     </envs>
