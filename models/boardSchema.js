@@ -5,6 +5,7 @@ var boardSchema = mongoose.Schema({
     title: String,
     author: String,
     contents: String,
+    align: String,
     like: {type:Number, default:0},
     date: {type:Date, default:Date.now},
     updated: [{title: String, contents:String, date:{type:Date, default:Date.now}}],

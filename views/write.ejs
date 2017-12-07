@@ -40,12 +40,15 @@
     <script>
         function textAlign(frame, option){
             $(frame).contents().find('body').attr("style", "text-align: "+option+";");
+            $('#addAlign').val(option); // value set for DB.
+            //console.log($('#addAlign').val());
         }
     </script>
 </head>
 <body>
 <div class="write_form" style="text-align:center">
-<form id="writeAction" action="/write.do" method="post">
+<form name="writeAction" id="writeAction" action="../write.do" method="post">
+    <input type="hidden" class="align" id="addAlign" name="addAlign" value="left">
     <input type="text" class="inputSubject" id="addContentSubject" name="addContentSubject" placeholder="Subject">
     <br>
     <input type="text" class="inputAuthor" id="addContentAuthor" name="addContentAuthor" placeholder="Author">
@@ -58,6 +61,7 @@
     <script>
         writeframe.document.designMode="on";
     </script>
+    <textarea name="addContents" id="addContents" style="display: none;"></textarea>
     <br>
     <button id="spellcheck" class="btn btn-primary" onclick="checkspell()" type="button">Spell Check</button>
     <button id="save" class="btn btn-primary" onclick="submitContents('add')" type="button">Submit</button>
@@ -67,23 +71,25 @@
 </body>
 
 <script>
-    function submitContents(option){
+    function submitContents(option) {
         var title = $('#addContentSubject').val();
-        var content = writeframe.document.body.innerText; //완전잘되는거
-        //var content = $('#writeframe').contents().find('html').text();
-       // var content = frames['writeframe'].document.getElementById("body").innerHTML;
+        var content = writeframe.document.body.innerText; // 편집창 내용 불러오기
+        var switchedText = content.replace(/(?:\r\n|\r|\n)/g, '<br>'); // 줄바꿈 문자 <br>로 치환
+        $('#addContents').val(switchedText); // 치환된 값 숨겨진 textarea에 저장
+        //$('#addContents').val().replace(/(?:\r\n|\r|\n)/g, '<br>');
+        console.log($('#addContents').val());
         var author = $('#addContentAuthor').val();
 
-        if(option=='add'){
-            if(title==''||content==''||author==''){
+        if (option == 'add') {
+            if (title == '' || content == '' || author == '') {
                 alert("Please fill the all blanks!");
                 return;
-            }else{
-                console.log(content);
+            } else {
+                //console.log(content);
                 //alert(content);
                 $('#writeAction').submit();
             }
         }
-    }
+}
 </script>
 </html>
