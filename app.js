@@ -1,12 +1,12 @@
 var express = require('express');
 var path = require('path');
-var favicon = require('serve-favicon');
 var logger = require('morgan');
 var bodyParser = require('body-parser');
 var mongoose = require('mongoose');
 var crypto = require('crypto');
 var app = express();
 
+var passport = require('passport');
 
 
 //--------------------------------------
@@ -81,7 +81,6 @@ mongoose.connect('mongodb://localhost/inspiring', {
     useMongoClient: true
 });
 mongoose.Promise = global.Promise;
-
 var db = mongoose.connection;
 
 //디비 접속확인
@@ -89,6 +88,19 @@ db.on('error', console.error.bind(console, 'connection error:'));
 db.once('open', function () {
     console.log('db연결됨');
 });
+  require('./config/passport')(passport);
+
+
+
+app.use(passport.initialize());
+app.use(passport.session());
+var session = require('express-session');
+app.use(session({
+    secret: 'keyboard cat',
+    resave: false,
+    saveUninitialized: true
+}));
+
 
 
 module.exports = app;

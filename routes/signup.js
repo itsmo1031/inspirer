@@ -1,6 +1,6 @@
 var express = require('express');
 var router = express.Router();
-var UserContents= require('../models/userSchema');
+var UserContents= require('../models/user');
 var crypto =require('crypto');
 
 
@@ -39,6 +39,8 @@ function addSignup(Userid, password, name, email){
         console.log("DB successfully saved.");
     });
 }
+
+
 
 
 module.exports = router;
