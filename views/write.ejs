@@ -7,23 +7,89 @@
     <link href="http://netdna.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.css" rel="stylesheet">
     <script src="http://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.js"></script>
     <script src="http://netdna.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.js"></script>
-    <!-- include summernote css/js-->
-    <link href="http://cdnjs.cloudflare.com/ajax/libs/summernote/0.8.8/summernote.css" rel="stylesheet">
-    <script src="http://cdnjs.cloudflare.com/ajax/libs/summernote/0.8.8/summernote.js"></script>
+    <script src="/javascripts/spellcheck.js"></script>
+
+    <script>
+        function htmledit(excute){
+            writeframe.document.execCommand(excute);
+            //writeframe.windows.execCommand(excute);
+        }
+    </script>
+    <script>
+        var result;
+        function checkspell(){
+            if(confirm("Spell Check?")){
+                var word = $('#writeframe').contents().find('html').text();
+                console.log("before word: " + word);
+                result = speller.correct(word);
+                console.log("corrected word: "+result);
+                return true;
+            } else return false;
+        }
+    </script>
+    <script>
+        var res;
+        function checkinnerText(){
+            if(confirm("innerTEXT?")){
+                res = $('#writeframe').contents().find('html').text();
+                alert($('#writeframe').contents().find('html').text());
+                return true;
+            } else return false;
+        }
+    </script>
+    <script>
+        function textAlign(frame, option){
+            $(frame).contents().find('body').attr("style", "text-align: "+option+";");
+            $('#addAlign').val(option); // value set for DB.
+            //console.log($('#addAlign').val());
+        }
+    </script>
 </head>
 <body>
-<div id="summernote"></div>
-<script>
-    $(document).ready(function() {
-        $('#summernote').summernote({
-            height: 600,
-            focus: true,
-            toolbar: [
-                ['para', ['paragraph']]
-            ]
-        });
-    });
-</script>
-<button id="save" class="btn btn-primary" onclick="save()" type="button">Save</button>
+<div class="write_form" style="text-align:center">
+<form name="writeAction" id="writeAction" action="../write.do" method="post">
+    <input type="hidden" class="align" id="addAlign" name="addAlign" value="left">
+    <input type="text" class="inputSubject" id="addContentSubject" name="addContentSubject" placeholder="Subject">
+    <br>
+    <input type="text" class="inputAuthor" id="addContentAuthor" name="addContentAuthor" placeholder="Author">
+    <br>
+    <a href="javascript:textAlign('#writeframe', 'left');">left</a>
+    <a href="javascript:textAlign('#writeframe', 'center');">center</a>
+    <a href="javascript:textAlign('#writeframe', 'right');">right</a>
+    <br>
+    <iframe name="writeframe" id="writeframe"></iframe>
+    <script>
+        writeframe.document.designMode="on";
+    </script>
+    <textarea name="addContents" id="addContents" style="display: none;"></textarea>
+    <br>
+    <button id="spellcheck" class="btn btn-primary" onclick="checkspell()" type="button">Spell Check</button>
+    <button id="save" class="btn btn-primary" onclick="submitContents('add')" type="button">Submit</button>
+</form>
+<br>
+</div>
 </body>
+
+<script>
+    function submitContents(option) {
+        var title = $('#addContentSubject').val();
+        var content = writeframe.document.body.innerText; // 편집창 내용 불러오기
+        var switchedText = content.replace(/(?:\r\n|\r|\n)/g, '<br>'); // 줄바꿈 문자 <br>로 치환
+        $('#addContents').val(switchedText); // 치환된 값 숨겨진 textarea에 저장
+        //$('#addContents').val().replace(/(?:\r\n|\r|\n)/g, '<br>');
+        console.log($('#addContents').val());
+        var author = $('#addContentAuthor').val();
+
+        if (option == 'add') {
+            if (title == '' || content == '' || author == '') {
+                alert("Please fill the all blanks!");
+                return;
+            } else {
+                //console.log(content);
+                //alert(content);
+                $('#writeAction').submit();
+            }
+        }
+}
+</script>
 </html>

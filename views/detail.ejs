@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title><%= title %></title>
+    <link rel='stylesheet' href='/stylesheets/style.css'/>
+    <!-- Latest compiled and minified CSS -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/css/bootstrap.min.css">
+
+    <!-- jQuery library -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+
+    <!-- Popper JS -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.6/umd/popper.min.js"></script>
+
+    <!-- Latest compiled JavaScript -->
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/js/bootstrap.min.js"></script>
+</head>
+<body>
+<div class="main">
+    <a href="/board/"><h2>게시판임둥</h2></a>
+    <div class="content_box">
+        <!-- content box-->
+        <div class="card card-outline-primary mb-3 text-center" style="width: 20rem;" >
+            <div class="card-block">
+                <h4 class="card-title"><%=content.title%></h4>
+                <p class="card-text" align=<%= content.align %>><%- content.contents %></p>
+                <a href="/board/" class="btn btn-primary">Back</a>
+            </div>
+        </div>
+    </div>
+</div>
+
+</body>
+<%
+
+
+function dateFormatChange(date) {
+    var options = {
+        weekday: "short", year: "numeric", month: "short",
+        day: "numeric", hour: "2-digit", minute: "2-digit"
+    };
+    return date.toLocaleTimeString("ko-KR", options);
+}
+%>
+<script>
+    function deleteContents(){
+
+    }
+</script>
+</html>

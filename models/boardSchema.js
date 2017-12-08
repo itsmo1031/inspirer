@@ -2,13 +2,13 @@ var mongoose = require('mongoose');
 mongoose.Promise = global.Promise;
 
 var boardSchema = mongoose.Schema({
-    writer: String,
-    password: String,
     title: String,
+    author: String,
     contents: String,
+    align: String,
     like: {type:Number, default:0},
     date: {type:Date, default:Date.now},
-    updated: [{contents:String, date:{type:Date, default:Date.now}}],
+    updated: [{title: String, contents:String, date:{type:Date, default:Date.now}}],
     deleted: {type:Boolean, default:false}
 });
 
